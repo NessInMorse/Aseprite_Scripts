@@ -37,8 +37,7 @@ end
 -- action.
 function Grayscale(cel,choice)
         -- Function to make every pixel grayscale
-        -- By getting each r,g,b value and choosing the middle out of those options and 
-        -- then using that middle (m) to modify the other color values
+        -- depening on user input chooses the highest, lowest or middle color intensity
                 math.randomseed(os.time())
                 local img = cel.image:clone()
         
