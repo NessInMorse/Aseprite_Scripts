@@ -38,7 +38,6 @@ end
 function Grayscale(cel,choice)
         -- Function to make every pixel grayscale
         -- depening on user input chooses the highest, lowest or middle color intensity
-                math.randomseed(os.time())
                 local img = cel.image:clone()
         
                   local rgba = app.pixelColor.rgba
