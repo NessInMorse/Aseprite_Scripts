@@ -8,15 +8,29 @@ function Lowest(r,g,b)
         return math.min(math.min(r,g),b)
 end
 
+
 function Middle(r,g,b)
         -- Returns the middle value of the three color values
         return math.min(math.max(r,g),b)
 end
 
+
 function Highest(r,g,b)
         --Returns the highest value of the three color values
         return math.max(math.max(r,g),b)
 end
+
+
+function saveAndWrite(cel,mode)
+        if mode == "s" then
+                unchanged = cel.image:clone()     
+        elseif mode == "w" then
+                cel.image = unchanged
+                app.refresh()
+        end
+end
+
+
 
 function GetOption(cel)
         --Chooses different options depending on user input
@@ -27,17 +41,16 @@ function GetOption(cel)
                 :button{text="Lowest",onclick=function() Grayscale(cel,"l") end}
                 :button{text="Middle",onclick=function() Grayscale(cel, "m") end}
                 :button{text="Highest",onclick=function() Grayscale(cel,"h")end}
+                :newrow()
+                :button{text="Reset",onclick=function() saveAndWrite(cel,"w") end}
                 :show{wait=false}
 end
 
 
--- The best way to modify a cel image is to clone it (the new cloned
--- image will be an independent image, without undo information).
--- Then we can change the cel image generating only one undoable
--- action.
 function Grayscale(cel,choice)
         -- Function to make every pixel grayscale
-        -- depening on user input chooses the highest, lowest or middle color intensity
+        -- By getting each r,g,b value and choosing the middle out of those options and 
+        -- then using that middle (m) to modify the other color values
                 local img = cel.image:clone()
         
                   local rgba = app.pixelColor.rgba
@@ -81,11 +94,10 @@ function main()
         if not cel then
            return app.alert("There is no active image")
         else
+                saveAndWrite(cel,"s")
                 GetOption(cel)
         end
 
-
 end
-
 
 main()
